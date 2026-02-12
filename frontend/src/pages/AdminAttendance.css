@@ -1,0 +1,120 @@
+.admin-attendance-page {
+  padding: 30px;
+  background: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.attendance-header h2 {
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.attendance-header input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+}
+
+/* CARD */
+.attendance-card {
+  background: white;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* TABLE */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.attendance-table thead {
+  background: #1e293b;
+  color: white;
+}
+
+.attendance-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background 0.2s;
+}
+
+.attendance-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* STATUS */
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status.present {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.absent {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* BUTTONS */
+.btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.present-btn {
+  background: #22c55e;
+  color: white;
+}
+
+.present-btn:hover {
+  background: #16a34a;
+}
+
+.absent-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.absent-btn:hover {
+  background: #dc2626;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-weight: 600;
+}

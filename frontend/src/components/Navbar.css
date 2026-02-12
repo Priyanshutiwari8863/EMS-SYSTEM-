@@ -1,0 +1,95 @@
+.navbar {
+  background: #1e293b;
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* RIGHT SIDE */
+.nav-right {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  position: relative;
+}
+
+/* PROFILE BOX */
+.profile-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+/* DROPDOWN */
+.dropdown {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: white;
+  color: #111;
+  width: 220px;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
+
+.dropdown p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.dropdown .role {
+  font-size: 13px;
+  color: #555;
+}
+
+.dropdown button {
+  width: 100%;
+  margin-top: 10px;
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background: #dc2626;
+}
+.dropdown {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 600px) {
+  .dropdown {
+    right: -20px;
+    width: 200px;
+  }
+}
+
+.profile-box:hover {
+  opacity: 0.9;
+}

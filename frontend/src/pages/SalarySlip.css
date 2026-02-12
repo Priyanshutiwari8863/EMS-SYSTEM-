@@ -1,0 +1,47 @@
+.slip-page {
+  padding: 20px;
+}
+
+.salary-slip {
+  width: 700px;
+  background: white;
+  padding: 25px;
+  border: 1px solid #ccc;
+  margin-bottom: 30px;
+}
+
+.salary-slip h3 {
+  text-align: center;
+}
+
+.print-btn {
+  margin-top: 15px;
+  text-align: center;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .salary-slip,
+  .salary-slip * {
+    visibility: visible;
+  }
+
+  .salary-slip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.company-address {
+  text-align: center;
+  font-size: 13px;
+  color: gray;
+}
+.actions {
+  margin: 15px 0;
+}

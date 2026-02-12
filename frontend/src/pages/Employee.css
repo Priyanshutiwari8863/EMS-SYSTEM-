@@ -1,0 +1,76 @@
+.ems-container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.ems-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 220px;
+}
+
+.ems-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.ems-table th,
+.ems-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.ems-table th {
+  background: #f4f6f8;
+  font-weight: 600;
+}
+
+.ems-table tr:hover {
+  background: #f9fafb;
+}
+
+.delete-btn {
+  border: none;
+  background: #ff4d4f;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #d9363e;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: white;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

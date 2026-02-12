@@ -1,0 +1,96 @@
+.leave-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.leave-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+}
+
+.leave-card h2 {
+  text-align: center;
+  color: #4f46e5;
+  margin-bottom: 20px;
+}
+
+.leave-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.leave-form input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: 0.2s;
+}
+
+.leave-form input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.apply-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #4f46e5;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-bottom: 20px;
+}
+
+.apply-btn:hover {
+  background: #4338ca;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #4f46e5;
+  color: white;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Status colors */
+.status.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.status.approved {
+  color: green;
+  font-weight: bold;
+}
+
+.status.rejected {
+  color: red;
+  font-weight: bold;
+}
