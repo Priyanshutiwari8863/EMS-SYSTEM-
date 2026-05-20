@@ -8,35 +8,47 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+
+      // ✅ Production callback URL (hardcoded for reliability)
+      callbackURL:
+        "https://ems-backend-27ez.onrender.com/api/auth/google/callback",
     },
+
     async (accessToken, refreshToken, profile, done) => {
       try {
         const email = profile.emails[0].value;
 
+        // Check if user already exists
         let user = await User.findOne({ email });
 
-        // ✅ if not exist → create
+        // Create user if not found
         if (!user) {
           user = await User.create({
             name: profile.displayName,
             email,
-            password: "google_auth", // dummy
+            password: "google_auth_dummy_password",
             role: "Employee",
-            profilePhoto: profile.photos[0]?.value || "",
+            profilePhoto: profile.photos?.[0]?.value || "",
           });
         }
 
-        // ✅ create JWT
+        // Generate JWT token
         const token = jwt.sign(
-          { id: user._id, role: user.role },
+          {
+            id: user._id,
+            role: user.role,
+          },
           process.env.JWT_SECRET,
-          { expiresIn: "7d" }
+          {
+            expiresIn: "7d",
+          }
         );
 
+        // Send user and token to callback route
         return done(null, { user, token });
-      } catch (err) {
-        return done(err, null);
+      } catch (error) {
+        console.error("Google Auth Error:", error);
+        return done(error, null);
       }
     }
   )
