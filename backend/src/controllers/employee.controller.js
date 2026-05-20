@@ -28,6 +28,7 @@ const getEmployees = async (req, res) => {
   }
 };
 
+
 // CREATE EMPLOYEE
 const createEmployee = async (req, res) => {
   try {

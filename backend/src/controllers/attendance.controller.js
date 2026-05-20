@@ -1,7 +1,6 @@
 const Attendance = require("../models/Attendance");
 const Employee = require("../models/Employee");
 
-
 // ================= CHECK-IN =================
 exports.checkIn = async (req, res) => {
   try {
@@ -19,7 +18,7 @@ exports.checkIn = async (req, res) => {
       status = "late";
     }
 
-    // ⭐ Find employee linked to logged-in user
+    // Find employee linked to logged-in user
     const employee = await Employee.findOne({ user: req.user.id });
 
     if (!employee) {
@@ -32,11 +31,16 @@ exports.checkIn = async (req, res) => {
       { user: req.user.id, date },
       {
         user: req.user.id,
-        employee: employee._id,   // ⭐ IMPORTANT FIELD
+        employee: employee._id,
+        date,
         checkIn: today.toTimeString().slice(0, 5),
         status,
       },
-      { new: true, upsert: true }
+      {
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true,
+      }
     );
 
     res.json(record);
@@ -44,7 +48,6 @@ exports.checkIn = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 // ================= CHECK-OUT =================
 exports.checkOut = async (req, res) => {
@@ -54,8 +57,12 @@ exports.checkOut = async (req, res) => {
 
     const record = await Attendance.findOneAndUpdate(
       { user: req.user.id, date },
-      { checkOut: today.toTimeString().slice(0, 5) },
-      { new: true }
+      {
+        checkOut: today.toTimeString().slice(0, 5),
+      },
+      {
+        new: true,
+      }
     );
 
     if (!record) {
@@ -70,12 +77,12 @@ exports.checkOut = async (req, res) => {
   }
 };
 
-
 // ================= GET MY ATTENDANCE =================
 exports.getMyAttendance = async (req, res) => {
   try {
-    const records = await Attendance.find({ user: req.user.id })
-      .sort({ date: -1 });
+    const records = await Attendance.find({
+      user: req.user.id,
+    }).sort({ date: -1 });
 
     res.json(records);
   } catch (err) {
@@ -83,15 +90,18 @@ exports.getMyAttendance = async (req, res) => {
   }
 };
 
-
 // ================= ADMIN ATTENDANCE =================
 exports.getAdminAttendance = async (req, res) => {
   try {
-    const { date } = req.query;
+    const query = {};
 
-    const records = await Attendance.find({ date })
-      .populate("employee", "name department position") // ⭐ NOW WORKS
-      .sort({ createdAt: -1 });
+    if (req.query.date) {
+      query.date = req.query.date;
+    }
+
+    const records = await Attendance.find(query)
+      .populate("employee", "name department position")
+      .sort({ date: -1 });
 
     res.json(records);
   } catch (err) {
