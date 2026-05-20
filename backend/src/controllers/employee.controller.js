@@ -3,12 +3,23 @@ const Employee = require("../models/Employee");
 // GET ALL EMPLOYEES
 const getEmployees = async (req, res) => {
   try {
-    const employees = await Employee.find({
-      $or: [
-        { user: req.user.id },
-        { user: { $exists: false } }
-      ]
-    });
+    let employees;
+
+    // Admin ko sab employees dikhao
+    if (
+      req.user.role &&
+      req.user.role.toString().trim().toLowerCase() === "admin"
+    ) {
+      employees = await Employee.find();
+    } else {
+      // Normal employee ko sirf apna data
+      employees = await Employee.find({
+        $or: [
+          { user: req.user.id },
+          { user: { $exists: false } }
+        ]
+      });
+    }
 
     res.json(employees);
   } catch (error) {
