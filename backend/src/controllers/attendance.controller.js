@@ -76,22 +76,20 @@ exports.checkOut = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-// ================= GET MY ATTENDANCE =================
-// ================= GET MY ATTENDANCE =================
 // ================= GET MY ATTENDANCE =================
 exports.getMyAttendance = async (req, res) => {
   try {
-    // Find employee linked to logged-in user
+    // Logged-in user ka employee record nikalo
     const employee = await Employee.findOne({
       user: req.user.id,
     });
 
+    // Agar employee record nahi mila to empty array return karo
     if (!employee) {
       return res.json([]);
     }
 
-    // Fetch attendance by employee ID
+    // Attendance employee ID ke basis par fetch karo
     const records = await Attendance.find({
       employee: employee._id,
     }).sort({ date: -1 });
