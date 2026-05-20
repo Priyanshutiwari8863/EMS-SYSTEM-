@@ -7,12 +7,13 @@ export default function Attendance() {
   const [today, setToday] = useState(null);
 
   const load = async () => {
-    const res = await api.get("/attendance");
+    // IMPORTANT: backend route is /api/attendance/my
+    const res = await api.get("/attendance/my");
     const data = res.data || [];
 
     setRecords(data);
 
-    // 🔹 find today's record
+    // Find today's record
     const todayDate = new Date().toISOString().slice(0, 10);
     const t = data.find((r) => r.date === todayDate);
     setToday(t || null);
@@ -37,7 +38,6 @@ export default function Attendance() {
 
   return (
     <div className="attendance-page">
-
       {/* HEADER */}
       <div className="attendance-header">
         <h2>My Attendance</h2>
@@ -46,7 +46,7 @@ export default function Attendance() {
           <button
             className="btn checkin"
             onClick={checkIn}
-            disabled={checkedIn}   // ✅ disable after check-in
+            disabled={checkedIn}
           >
             ✔ Check In
           </button>
@@ -54,7 +54,7 @@ export default function Attendance() {
           <button
             className="btn checkout"
             onClick={checkOut}
-            disabled={!checkedIn || checkedOut} // ✅ only after check-in
+            disabled={!checkedIn || checkedOut}
           >
             ⏱ Check Out
           </button>
@@ -77,7 +77,6 @@ export default function Attendance() {
             {records.map((r) => (
               <tr key={r._id}>
                 <td>{r.date}</td>
-
                 <td>
                   <span
                     className={
@@ -89,7 +88,6 @@ export default function Attendance() {
                     {r.status}
                   </span>
                 </td>
-
                 <td>{r.checkIn || "-"}</td>
                 <td>{r.checkOut || "-"}</td>
               </tr>
@@ -100,7 +98,7 @@ export default function Attendance() {
                 <td colSpan="4" className="empty">
                   No attendance records found
                 </td>
-                </tr>
+              </tr>
             )}
           </tbody>
         </table>
