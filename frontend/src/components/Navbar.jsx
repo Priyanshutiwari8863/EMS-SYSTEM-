@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import DashboardCards from "../components/DashboardCards";
-import EmployeeList from "./EmployeeList";
+
 import "../styles/dashboard.css";
 import api from "../api/axios";
 
