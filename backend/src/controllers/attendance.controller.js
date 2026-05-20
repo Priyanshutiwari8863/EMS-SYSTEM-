@@ -79,16 +79,22 @@ exports.checkOut = async (req, res) => {
 
 // ================= GET MY ATTENDANCE =================
 // ================= GET MY ATTENDANCE =================
+// ================= GET MY ATTENDANCE =================
 exports.getMyAttendance = async (req, res) => {
   try {
-    console.log("Logged in User ID:", req.user.id);
-
-    const records = await Attendance.find({
+    // Find employee linked to logged-in user
+    const employee = await Employee.findOne({
       user: req.user.id,
-    }).sort({ date: -1 });
+    });
 
-    console.log("Attendance Records Found:", records.length);
-    console.log("Attendance Data:", records);
+    if (!employee) {
+      return res.json([]);
+    }
+
+    // Fetch attendance by employee ID
+    const records = await Attendance.find({
+      employee: employee._id,
+    }).sort({ date: -1 });
 
     res.json(records);
   } catch (err) {
