@@ -1,12 +1,9 @@
-// Replace your current Dashboard.jsx with this updated version.
-// This adds the Project Assignment page directly below EmployeeList.
-
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import DashboardCards from "../components/DashboardCards";
 import EmployeeList from "./EmployeeList";
-import ProjectTasks from "./ProjectTasks"; // ✅ Add this import
 import "../styles/dashboard.css";
 import api from "../api/axios";
 
@@ -21,16 +18,13 @@ export default function Dashboard() {
       try {
         const res = await api.get("/employees");
 
-        // Handle all possible response formats
-        const employees =
-          Array.isArray(res.data)
-            ? res.data
-            : res.data.records ||
-              res.data.employees ||
-              res.data.data ||
-              [];
+        const employees = Array.isArray(res.data)
+          ? res.data
+          : res.data.records ||
+            res.data.employees ||
+            res.data.data ||
+            [];
 
-        // Count active employees
         const active = employees.filter(
           (e) => (e.status || "active") === "active"
         ).length;
@@ -49,24 +43,19 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* Top Navbar */}
       <Navbar />
 
       <div className="layout">
-        {/* Left Sidebar */}
         <Sidebar />
 
-        {/* Main Content */}
         <div className="content">
           <h1>Dashboard</h1>
 
-          {/* Dashboard Summary Cards */}
           <DashboardCards
             total={stats.totalEmployees}
             active={stats.activeEmployees}
           />
 
-          {/* Employee Management Section */}
           <EmployeeList />
 
           {/* Project Assignment Section */}
@@ -90,13 +79,24 @@ export default function Dashboard() {
               📋 Project Assignment
             </h2>
 
-            {/* 
-              If ProjectTasks requires a route parameter (useParams),
-              it won't work directly here.
-              In that case, use your dedicated Project Assignment page
-              or refactor ProjectTasks to accept a projectId prop.
-            */}
-            <ProjectTasks />
+            <p style={{ color: "#6b7280", marginBottom: "20px" }}>
+              Open the project tasks page to manage assignments and timelines.
+            </p>
+
+            <Link
+              to="/project-analytics"
+              style={{
+                display: "inline-block",
+                padding: "12px 24px",
+                background: "#2563eb",
+                color: "#ffffff",
+                textDecoration: "none",
+                borderRadius: "10px",
+                fontWeight: "600",
+              }}
+            >
+              Open Project Management
+            </Link>
           </div>
         </div>
       </div>
