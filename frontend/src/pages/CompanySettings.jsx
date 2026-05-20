@@ -20,11 +20,21 @@ export default function CompanySettings() {
   const [file, setFile] = useState(null);
 
   /* ================= LOAD SETTINGS ================= */
-  useEffect(() => {
-    api.get("/company").then((res) => {
-      if (res.data) setForm(res.data);
-    });
-  }, []);
+  // NEW CODE:
+useEffect(() => {
+  api.get("/company").then((res) => {
+    console.log("Company Settings Response:", res.data);
+
+    if (res.data) {
+      setForm((prev) => ({
+        ...prev,
+        ...res.data,
+      }));
+    }
+  });
+}, []);
+
+
 
   /* ================= SAVE SETTINGS ================= */
   const saveSettings = async () => {
@@ -33,17 +43,36 @@ export default function CompanySettings() {
   };
 
   /* ================= UPLOAD LOGO ================= */
-  const uploadLogo = async () => {
-    if (!file) return alert("Select logo first");
+ const uploadLogo = async () => {
+  if (!file) return alert("Select logo first");
 
+  try {
     const data = new FormData();
     data.append("logo", file);
 
-    const res = await api.put("/company/logo", data);
-    setForm(res.data);
+    const res = await api.put("/company/logo", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
-    alert("Logo uploaded ✅");
-  };
+    console.log("Upload Response:", res.data);
+
+    setForm((prev) => ({
+      ...prev,
+      ...res.data,
+      logo:
+        res.data.logo ||
+        res.data.logoUrl ||
+        prev.logo,
+    }));
+
+    alert("Logo uploaded successfully ✅");
+  } catch (error) {
+    console.error("Logo Upload Error:", error);
+    alert("Logo upload failed ❌");
+  }
+};
 
   /* ================= DRAG DROP ================= */
   const handleDrop = (e) => {
@@ -81,16 +110,30 @@ export default function CompanySettings() {
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
       >
-        <img
-          src={
-            form.logo
-              ? `http://localhost:5000${form.logo}`
-              : "https://via.placeholder.com/120"
-          }
-          alt="logo"
-        />
+       <img
+  src={
+    form.logo && form.logo.trim() !== ""
+      ? `http://localhost:5000${form.logo}`
+      : "/logo.jpg"
+  }
+  alt="Company Logo"
+  onError={(e) => {
+    e.target.src = "/logo.jpg";
+  }}
+  style={{
+    width: "120px",
+    height: "120px",
+    objectFit: "contain",
+    borderRadius: "16px",
+    border: "2px solid #e5e7eb",
+    padding: "10px",
+    background: "#ffffff",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+  }}
+/>
 
-        <p>Drag & drop logo here or select file</p>
+
+        
 
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <button onClick={uploadLogo}>Upload Logo</button>

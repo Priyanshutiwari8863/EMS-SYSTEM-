@@ -1,10 +1,481 @@
-.layout {
-  display: flex;
-  min-height: 100vh;
-  background: #f1f5f9;
+/* ==========================================
+   PROFESSIONAL DASHBOARD CSS
+   - Removes all left gap
+   - Removes top gap
+   - Attractive UI
+   - Visible table headers
+   - Responsive design
+========================================== */
+
+/* Reset */
+* {
+  box-sizing: border-box;
 }
 
+/* Main Layout */
+.layout {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef4ff 100%);
+}
+
+/* ==========================================
+   CONTENT AREA (NO LEFT GAP)
+========================================== */
 .content {
   flex: 1;
-  padding: 20px;
+  width: 100%;
+  margin: 0 !important;
+  padding: 20px 30px !important;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ==========================================
+   DASHBOARD TITLE
+========================================== */
+.content h1 {
+  margin: 0 0 30px 0 !important;
+  padding: 0;
+  text-align: left;
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0f172a;
+  letter-spacing: -1px;
+}
+
+.content h1::after {
+  content: "";
+  display: block;
+  width: 130px;
+  height: 6px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #06b6d4, #2563eb);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+/* ==========================================
+   BEAUTIFUL DASHBOARD CARDS
+   Replace your existing .dashboard-card CSS
+========================================== */
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+.dashboard-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-radius: 28px;
+  padding: 34px 30px;
+  min-height: 180px;
+
+  /* Premium shadow */
+  box-shadow:
+    0 15px 35px rgba(15, 23, 42, 0.08),
+    0 6px 12px rgba(15, 23, 42, 0.05);
+
+  /* Soft border */
+  border: 1px solid rgba(226, 232, 240, 0.9);
+
+  /* Smooth animation */
+  transition: all 0.35s ease;
+}
+
+/* Top gradient line */
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(90deg, #06b6d4, #2563eb, #7c3aed);
+}
+
+/* Decorative glow circle */
+.dashboard-card::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(79, 70, 229, 0.12),
+    transparent 70%
+  );
+}
+
+/* Hover effect */
+.dashboard-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow:
+    0 25px 50px rgba(15, 23, 42, 0.12),
+    0 10px 20px rgba(15, 23, 42, 0.06);
+}
+
+/* Card title */
+.dashboard-card h3 {
+  margin: 0 0 20px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.2px;
+}
+
+/* Card value */
+.dashboard-card h2 {
+  margin: 0;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #0f172a;
+}
+
+/* Optional color variations */
+.dashboard-card:nth-child(1)::before {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.dashboard-card:nth-child(2)::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.dashboard-card:nth-child(3)::before {
+  background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+}
+
+.dashboard-card:nth-child(4)::before {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .dashboard-card {
+    min-height: 150px;
+    padding: 28px 24px;
+  }
+
+  .dashboard-card h2 {
+    font-size: 2.8rem;
+  }
+}
+/* ==========================================
+   EMPLOYEE MANAGEMENT CARD
+========================================== */
+.employee-management,
+.employee-list,
+.employee-section {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 30px;
+  margin-top: 0 !important;
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.08),
+    0 4px 10px rgba(15, 23, 42, 0.04);
+  border: 1px solid #e2e8f0;
+}
+
+.employee-management h2,
+.employee-list h2,
+.employee-section h2 {
+  margin: 0 0 24px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* ==========================================
+   SEARCH BOX
+========================================== */
+.search-box,
+.search-input {
+  width: 100%;
+  max-width: 320px;
+  padding: 14px 18px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 15px;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.search-box:focus,
+.search-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+/* ==========================================
+   FORM INPUTS
+========================================== */
+.employee-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.employee-form input,
+.employee-form select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 15px;
+  background: #ffffff;
+  color: #0f172a;
+  transition: all 0.25s ease;
+}
+
+.employee-form input:focus,
+.employee-form select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+button,
+.add-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 14px;
+  transition: all 0.25s ease;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #ffffff;
+  padding: 14px 24px;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(79, 70, 229, 0.35);
+}
+
+/* ==========================================
+   TABLE WRAPPER
+========================================== */
+/* Table wrapper */
+.employee-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 24px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+}
+
+/* Table */
+.employee-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  background: #ffffff;
+}
+
+/* ==========================================
+   HEADER ROW BACKGROUND
+========================================== */
+.employee-table thead {
+  display: table-header-group !important;
+}
+
+.employee-table thead tr {
+  display: table-row !important;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+}
+
+/* ==========================================
+   HEADER TEXT (FORCE VISIBLE)
+========================================== */
+.employee-table thead th {
+  display: table-cell !important;
+  position: relative;
+  z-index: 10;
+
+  /* Strong visible text */
+  color: #ffffff !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  text-shadow: none !important;
+  filter: none !important;
+
+  /* Typography */
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+
+  /* Layout */
+  padding: 18px 20px !important;
+  text-align: left !important;
+  white-space: nowrap;
+
+  /* Remove conflicting styles */
+  border: none !important;
+}
+
+/* Rounded corners */
+.employee-table thead th:first-child {
+  border-top-left-radius: 18px;
+}
+
+.employee-table thead th:last-child {
+  border-top-right-radius: 18px;
+  text-align: center !important;
+}
+
+/* ==========================================
+   REMOVE ALL GLOBAL CONFLICTS
+========================================== */
+th,
+table th,
+thead th,
+.employee-table th {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background-color: transparent !important;
+}
+
+/* ==========================================
+   BODY STYLING
+========================================== */
+.employee-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.employee-table tbody tr:hover {
+  background: #eff6ff !important;
+}
+
+.employee-table tbody td {
+  padding: 18px 20px;
+  font-size: 15px;
+  color: #1f2937;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.employee-table tbody td:nth-child(4) {
+  font-weight: 700;
+  color: #10b981;
+}
+
+.employee-table tbody td:last-child {
+  text-align: center;
+}
+
+/* ==========================================
+   DEBUG MODE
+   If still not visible, temporarily uncomment:
+========================================== */
+/*
+.employee-table thead th {
+  background: red !important;
+  color: yellow !important;
+}
+*/
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+.edit-btn,
+.delete-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  margin: 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.edit-btn {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.edit-btn:hover {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.delete-btn {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.delete-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+@media (max-width: 1024px) {
+  .content h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 15px !important;
+  }
+
+  .content h1 {
+    font-size: 2.4rem;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-management,
+  .employee-list,
+  .employee-section {
+    padding: 20px;
+  }
+
+  .employee-form {
+    grid-template-columns: 1fr;
+  }
+
+  .search-box,
+  .search-input {
+    max-width: 100%;
+  }
+
+  .employee-table {
+    min-width: 700px;
+  }
 }

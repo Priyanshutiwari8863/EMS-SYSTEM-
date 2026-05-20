@@ -3,16 +3,75 @@ import api from "../api/axios";
 import "./PayrollHistory.css";
 
 export default function PayrollHistory() {
-  const [payrolls, setPayrolls] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const load = async () => {
-    const res = await api.get("/payroll");
-    setPayrolls(res.data.payrolls || []);
+  const loadData = async () => {
+    try {
+      // Fetch all employees
+      const empRes = await api.get("/employees");
+      const employees =
+        empRes.data.records ||
+        empRes.data.employees ||
+        empRes.data.data ||
+        empRes.data ||
+        [];
+
+      // Fetch all payrolls
+      const payRes = await api.get("/payroll");
+      const payrolls =
+        payRes.data.records ||
+        payRes.data.payrolls ||
+        payRes.data.data ||
+        payRes.data ||
+        [];
+
+      // Merge employee + payroll data
+      const merged = employees.map((emp) => {
+        const payroll = payrolls.find(
+          (p) => p.employee?._id === emp._id
+        );
+
+        return {
+          _id: emp._id,
+          name: emp.name,
+          department: emp.department,
+          month: payroll?.month || "Not Generated",
+          baseSalary:
+            payroll?.baseSalary ??
+            emp.salary ??
+            emp.baseSalary ??
+            0,
+          deduction: payroll?.deduction ?? 0,
+          finalSalary:
+            payroll?.finalSalary ??
+            emp.salary ??
+            emp.baseSalary ??
+            0,
+        };
+      });
+
+      setRows(merged);
+    } catch (error) {
+      console.error("Payroll History Error:", error);
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    load();
+    loadData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="history-page">
+        <h2 className="title">Payroll History</h2>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="history-page">
@@ -32,21 +91,21 @@ export default function PayrollHistory() {
           </thead>
 
           <tbody>
-            {payrolls.map((p) => (
-              <tr key={p._id}>
-                <td>{p.employee?.name}</td>
-                <td>{p.employee?.department}</td>
-                <td>{p.month}</td>
-                <td>₹ {p.baseSalary}</td>
-                <td className="deduction">₹ {p.deduction}</td>
-                <td className="final">₹ {p.finalSalary}</td>
+            {rows.map((row) => (
+              <tr key={row._id}>
+                <td>{row.name || "N/A"}</td>
+                <td>{row.department || "N/A"}</td>
+                <td>{row.month}</td>
+                <td>₹ {row.baseSalary}</td>
+                <td className="deduction">₹ {row.deduction}</td>
+                <td className="final">₹ {row.finalSalary}</td>
               </tr>
             ))}
 
-            {payrolls.length === 0 && (
+            {rows.length === 0 && (
               <tr>
                 <td colSpan="6" className="empty">
-                  No payroll records found
+                  No employees found
                 </td>
               </tr>
             )}
