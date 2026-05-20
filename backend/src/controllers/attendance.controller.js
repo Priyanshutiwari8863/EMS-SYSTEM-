@@ -78,18 +78,24 @@ exports.checkOut = async (req, res) => {
 };
 
 // ================= GET MY ATTENDANCE =================
+// ================= GET MY ATTENDANCE =================
 exports.getMyAttendance = async (req, res) => {
   try {
+    console.log("Logged in User ID:", req.user.id);
+
     const records = await Attendance.find({
       user: req.user.id,
     }).sort({ date: -1 });
 
+    console.log("Attendance Records Found:", records.length);
+    console.log("Attendance Data:", records);
+
     res.json(records);
   } catch (err) {
+    console.error("GET MY ATTENDANCE ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
-
 // ================= ADMIN ATTENDANCE =================
 exports.getAdminAttendance = async (req, res) => {
   try {
