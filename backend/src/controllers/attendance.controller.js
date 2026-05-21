@@ -79,19 +79,8 @@ exports.checkOut = async (req, res) => {
 // ================= GET MY ATTENDANCE =================
 exports.getMyAttendance = async (req, res) => {
   try {
-    // Logged-in user ka employee record nikalo
-    const employee = await Employee.findOne({
-      user: req.user.id,
-    });
-
-    // Agar employee record nahi mila to empty array return karo
-    if (!employee) {
-      return res.json([]);
-    }
-
-    // Attendance employee ID ke basis par fetch karo
     const records = await Attendance.find({
-      employee: employee._id,
+      user: req.user.id,
     }).sort({ date: -1 });
 
     res.json(records);
@@ -110,7 +99,7 @@ exports.getAdminAttendance = async (req, res) => {
     }
 
     const records = await Attendance.find(query)
-      .populate("employee", "name department position")
+      .populate("user", "email role")
       .sort({ date: -1 });
 
     res.json(records);
