@@ -7,7 +7,7 @@ export default function AdminDashboard() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    api.get("/employees").then(res => {
+    api.get("/employees").then((res) => {
       setTotal(res.data.employees?.length || 0);
     });
   }, []);
@@ -15,9 +15,11 @@ export default function AdminDashboard() {
   return (
     <>
       <h1>Admin Dashboard</h1>
+
       <DashboardCards total={total} />
 
-      {/* <EmployeeList /> */}
+      {/* Employee List */}
+      <EmployeeList />
     </>
   );
 }
