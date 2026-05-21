@@ -76,12 +76,15 @@ exports.checkOut = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-// ================= GET MY ATTENDANCE =================
 exports.getMyAttendance = async (req, res) => {
   try {
+    console.log("USER ID:", req.user.id);
+
     const records = await Attendance.find({
       user: req.user.id,
     }).sort({ date: -1 });
+
+    console.log("ATTENDANCE RECORDS:", records);
 
     res.json(records);
   } catch (err) {
