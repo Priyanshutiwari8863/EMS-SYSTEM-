@@ -16,7 +16,8 @@ export default function AdminDashboard() {
     <>
       <h1>Admin Dashboard</h1>
       <DashboardCards total={total} />
-      <EmployeeList />
+
+      {/* <EmployeeList /> */}
     </>
   );
 }
