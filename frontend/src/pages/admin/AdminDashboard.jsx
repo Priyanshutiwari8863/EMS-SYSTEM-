@@ -1,25 +1,63 @@
+import { useEffect, useState } from "react";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
 import DashboardCards from "../../components/DashboardCards";
 import EmployeeList from "../EmployeeList";
 import api from "../../api/axios";
-import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
-  const [total, setTotal] = useState(0);
+  const [stats, setStats] = useState({
+    totalEmployees: 0,
+    activeEmployees: 0,
+  });
 
   useEffect(() => {
-    api.get("/employees").then((res) => {
-      setTotal(res.data.employees?.length || 0);
-    });
+    const loadStats = async () => {
+      try {
+        const res = await api.get("/employees");
+
+        const employees = Array.isArray(res.data)
+          ? res.data
+          : res.data.records ||
+            res.data.employees ||
+            res.data.data ||
+            [];
+
+        const active = employees.filter(
+          (e) => (e.status || "active") === "active"
+        ).length;
+
+        setStats({
+          totalEmployees: employees.length,
+          activeEmployees: active,
+        });
+      } catch (err) {
+        console.error("Admin dashboard error:", err);
+      }
+    };
+
+    loadStats();
   }, []);
 
   return (
     <>
-      <h1>Admin Dashboard</h1>
+      <Navbar />
 
-      <DashboardCards total={total} />
+      <div className="layout">
+        <Sidebar />
 
-      {/* Employee List */}
-      <EmployeeList />
+        <div className="content">
+          <h1>Admin Dashboard</h1>
+
+          <DashboardCards
+            total={stats.totalEmployees}
+            active={stats.activeEmployees}
+          />
+
+          {/* Employee List */}
+          <EmployeeList />
+        </div>
+      </div>
     </>
   );
 }
