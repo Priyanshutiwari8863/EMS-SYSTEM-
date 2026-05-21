@@ -56,7 +56,8 @@ export default function Dashboard() {
             active={stats.activeEmployees}
           />
 
-          <EmployeeList />
+          {/* Temporarily disabled to prevent dashboard crash */}
+          {/* <EmployeeList /> */}
 
           {/* Project Assignment Section */}
           <div
@@ -65,7 +66,7 @@ export default function Dashboard() {
               background: "#ffffff",
               padding: "24px",
               borderRadius: "20px",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.08)",
             }}
           >
             <h2
