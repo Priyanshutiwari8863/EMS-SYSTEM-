@@ -7,18 +7,29 @@ export default function Attendance() {
   const [today, setToday] = useState(null);
 
   const load = async () => {
-    // IMPORTANT: backend route is /api/attendance/my
-    const res = await api.get("/attendance/my");
-    const data = res.data || [];
+  try {
 
-    setRecords(data);
+    const res = await api.get("/attendance/my");
+
+    console.log("ATTENDANCE RESPONSE:", res.data);
+
+    const data = Array.isArray(res.data)
+      ? res.data
+      : [];
+
+    setRecords([...data]);
 
     // Find today's record
     const todayDate = new Date().toISOString().slice(0, 10);
-    const t = data.find((r) => r.date === todayDate);
-    setToday(t || null);
-  };
 
+    const t = data.find((r) => r.date === todayDate);
+
+    setToday(t || null);
+
+  } catch (err) {
+    console.error("ATTENDANCE LOAD ERROR:", err);
+  }
+};
   const checkIn = async () => {
     await api.post("/attendance/checkin");
     load();
