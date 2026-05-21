@@ -18,17 +18,21 @@ exports.checkIn = async (req, res) => {
       status = "late";
     }
 
-    // Find employee linked to logged-in user
-    const employee = await Employee.findOne({ user: req.user.id });
+    const employee = await Employee.findOne({
+      user: req.user.id,
+    });
 
     if (!employee) {
       return res.status(404).json({
-        message: "Employee record not found for this user",
+        message: "Employee record not found",
       });
     }
 
     const record = await Attendance.findOneAndUpdate(
-      { user: req.user.id, date },
+      {
+        user: req.user.id,
+        date,
+      },
       {
         user: req.user.id,
         employee: employee._id,
@@ -44,7 +48,9 @@ exports.checkIn = async (req, res) => {
     );
 
     res.json(record);
+
   } catch (err) {
+    console.error("CHECK-IN ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -56,7 +62,10 @@ exports.checkOut = async (req, res) => {
     const date = today.toISOString().slice(0, 10);
 
     const record = await Attendance.findOneAndUpdate(
-      { user: req.user.id, date },
+      {
+        user: req.user.id,
+        date,
+      },
       {
         checkOut: today.toTimeString().slice(0, 5),
       },
@@ -72,13 +81,18 @@ exports.checkOut = async (req, res) => {
     }
 
     res.json(record);
+
   } catch (err) {
+    console.error("CHECK-OUT ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
+
+// ================= GET MY ATTENDANCE =================
 exports.getMyAttendance = async (req, res) => {
   try {
-    console.log("USER ID:", req.user.id);
+
+    console.log("REQ USER:", req.user);
 
     const records = await Attendance.find({
       user: req.user.id,
@@ -87,11 +101,13 @@ exports.getMyAttendance = async (req, res) => {
     console.log("ATTENDANCE RECORDS:", records);
 
     res.json(records);
+
   } catch (err) {
     console.error("GET MY ATTENDANCE ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
+
 // ================= ADMIN ATTENDANCE =================
 exports.getAdminAttendance = async (req, res) => {
   try {
@@ -105,8 +121,12 @@ exports.getAdminAttendance = async (req, res) => {
       .populate("user", "email role")
       .sort({ date: -1 });
 
+    console.log("ADMIN ATTENDANCE:", records);
+
     res.json(records);
+
   } catch (err) {
+    console.error("ADMIN ATTENDANCE ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
