@@ -101,6 +101,8 @@ exports.getMyAttendance = async (req, res) => {
     console.log("ATTENDANCE RECORDS:", records);
 
     res.json(records);
+    
+    console.log("REQ USER ID:", req.user.id);
 
   } catch (err) {
     console.error("GET MY ATTENDANCE ERROR:", err);
