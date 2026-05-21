@@ -23,7 +23,7 @@ export default function Login() {
       localStorage.setItem("role", res.data.user.role);
       localStorage.setItem("email", res.data.user.email);
 
-      window.location.reload();
+      window.location.href = "/";
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     } finally {
@@ -56,17 +56,17 @@ export default function Login() {
         <button type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>
-        <button
-            type="button"
-            className="google-btn"
-            onClick={() =>
-              window.location.href =
-                "http://localhost:5000/api/auth/google"
-            }
-          >
-            Login with Google
-          </button>
-
+       
+  <button
+  type="button"
+  className="google-btn"
+  onClick={() =>
+    window.location.href =
+      "https://ems-backend-27ez.onrender.com/api/auth/google"
+  }
+>
+  Login with Google
+</button>
       </form>
     </div>
   );
